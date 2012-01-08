@@ -124,7 +124,12 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 		var user/*UserVO*/ = new UserVO();
 		this.sendNotification( NotificationNames.NEW_USER, user );
 	},
-	
+
+    /**
+     * Called when to delete an user from the list.
+     *
+     * @private
+     */
 	onDelete: function()
 	{
 		var uname/*String*/ = this.getUserList().getSelectedUser();
@@ -138,11 +143,8 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	 * @private
 	 * 
 	 * Called when a user is selected in the user list.
-	 * 
-	 * @param {String} selectedUserName
-	 * 		User name of the user selected in the list.
 	 */
-	onSelect: function( selectedUserName )
+	onSelect: function()
 	{
 		var uname/*String*/ = this.getUserList().getSelectedUser();
 		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );

@@ -70,4 +70,4 @@ ApplicationFacade.getInstance = function()
 		Facade.instance = new ApplicationFacade();
 	
 	return Facade.instance;
-}
+};

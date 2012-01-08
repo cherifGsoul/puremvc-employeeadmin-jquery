@@ -22,7 +22,7 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	 */
 	initialize: function()
 	{
-		this.listenerMap = new Object();
+		this.listenerMap = {};
 	},
 	
 	/**
@@ -83,9 +83,9 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	 */
 	addEventListener: function
 	(
-		type/*String*/,
-		listener/*Function*/,
-		context/*Object*/
+		type,
+		listener,
+		context
 	)
 	{
 		if( typeof type == "undefined" )
@@ -98,7 +98,7 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	
 		var queue/*Object*/;
 		if( typeof this.listenerMap[ UiComponent.QUEUE_PATTERN + type ] == "undefined" )
-			queue = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ] = new Array();
+			queue = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ] = [];
 		else
 			queue = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ];
 	
@@ -128,9 +128,9 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	 */
 	removeEventListener: function
 	(
-		type/*String*/,
-		listener/*Function*/,
-		context/*Object*/
+		type,
+		listener,
+		context
 	)
 	{
 		if( typeof type == "undefined" )
@@ -145,11 +145,14 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 		var queue/*Object*/ = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ];
 		var len/*Number*/ = queue.length;
 		for(var i/*Number*/=0; i<len; i++)
-			if( UiComponent.ListenerDescriptor.equals( new UiComponent.ListenerDescriptor( listener, context ) ) )
+        {
+            var listenerDescriptor/*UiComponent.ListenerDescriptor*/ = queue[i];
+            if( listenerDescriptor.equals( new UiComponent.ListenerDescriptor( listener, context ) ) )
 			{
 				queue.splice(i,1);
 				return;
 			}
+        }
 	}
 });
 
@@ -203,7 +206,36 @@ UiComponent.ListenerDescriptor = Objs("org.puremvc.js.demos.objs.employeeadmin.v
 	{
 		this.listener = listener;
 		this.context = context;
-	}
+	},
+
+    /**
+     * @private
+     *
+     * Compare two <code>UiComponent.ListenerDescriptor</code>s to determine if
+     * they target the exact same event listener.
+     *
+     * @param {UiComponent.ListenerDescriptor} compared
+     * 		The descriptor that will be compared to the current.
+     *
+     * @return {Boolean}
+     * 		The two compared listeners are equals.
+     */
+    equals: function( compared )
+    {
+        if( compared.listener == this.listener )
+        {
+            if( typeof compared.context != "undefined" )
+            {
+                if( compared.context == null && this.context == null )
+                    return true;
+
+                if( compared.context == this.context )
+                    return true;
+            }
+        }
+
+        return false;
+    }
 });
 
 /* 
@@ -219,32 +251,3 @@ UiComponent.ListenerDescriptor = Objs("org.puremvc.js.demos.objs.employeeadmin.v
  * @constant
  */
 UiComponent.QUEUE_PATTERN = '@_@';
-
-/**
- * @private
- * 
- * Compare two <code>UiComponent.ListenerDescriptor</code>s to determine if
- * they target the exact same event listener.
- * 
- * @param {UiComponent.ListenerDescriptor} compared
- * 		The descriptor that will be compared to the current.
- * 
- * @return {Boolean}
- * 		The two compared listeners are equals.
- */
-UiComponent.equals = function( compared )
-{
-	if( compared.listener == this.listener )
-	{
-		if( typeof compared.context != "undefined" )
-		{
-			if( compared.context == null && this.context == null )
-				return true;
-				
-			if( compared.context == this.context )
-				return true;
-		}
-	}
-
-	return false;
-}

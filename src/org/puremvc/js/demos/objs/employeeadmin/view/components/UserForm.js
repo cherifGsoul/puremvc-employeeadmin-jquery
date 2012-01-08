@@ -246,12 +246,6 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	
 	/**
 	 * Update user attributes with form fields value.
-	 * 
-	 * @param {UserVO} user
-	 * 		The currently selected user.
-	 * 
-	 * @param {Array} userRoles
-	 * 		The roles list for the currently selected user.
 	 */
 	updateUser: function()
 	{

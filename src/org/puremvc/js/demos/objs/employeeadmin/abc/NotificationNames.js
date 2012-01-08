@@ -12,7 +12,7 @@
 var NotificationNames = Objs("org.puremvc.js.demos.objs.employeeadmin.abc.NotificationNames",{});
 
 NotificationNames.STARTUP = "startup";
-NotificationNames.NEW_USER = "newUser"
+NotificationNames.NEW_USER = "newUser";
 NotificationNames.DELETE_USER = "deleteUser";
 NotificationNames.CANCEL_SELECTED = "cancelSelected";
 NotificationNames.USER_SELECTED = "userSelected";

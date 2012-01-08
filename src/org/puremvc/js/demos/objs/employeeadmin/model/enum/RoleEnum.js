@@ -101,7 +101,7 @@ RoleEnum.getList = function()
 		RoleEnum.SHIPPING,
 		RoleEnum.RETURNS
 	];
-}
+};
 
 /**
  * Returns the roles list including the
@@ -116,7 +116,7 @@ RoleEnum.getComboList = function()
 	var cList/*Array*/ = RoleEnum.getList();
 	cList.unshift( RoleEnum.NONE_SELECTED );
 	return cList;
-}
+};
 
 /**
  * Returns the <code>RoleEnum</code> with this ordinal value.
@@ -136,4 +136,4 @@ RoleEnum.getItem = function( ordinal )
 			return RoleEnum[list[i]];
 	
 	return null;
-}
+};

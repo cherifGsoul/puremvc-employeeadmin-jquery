@@ -69,7 +69,7 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 		/**
 		 * Remove a role from the list. 
 		 * 
-		 * @param {RoleVO} role
+		 * @param {RoleVO} item
 		 * 		The role to remove.
 		 */ 
 		deleteItem: function( item )

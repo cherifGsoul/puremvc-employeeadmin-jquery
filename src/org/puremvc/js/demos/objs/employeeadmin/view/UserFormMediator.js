@@ -92,9 +92,6 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	 * @private
 	 * 
 	 * Called when a user is updated using the form.
-	 * 
-	 * @param {UiComponent.Event} event
-	 * 		The dispatched event object.
 	 */
 	onUpdate: function()
 	{
@@ -112,9 +109,6 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	 * @private
 	 * 
 	 * Called when modifications made to a user in the form are canceled.
-	 * 
-	 * @param {UiComponent.Event} event
-	 * 		The dispatched event object.
 	 */
 	onCancel: function()
 	{

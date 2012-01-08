@@ -79,7 +79,7 @@ DeptEnum.getList = function()
 		DeptEnum.SALES, 
 		DeptEnum.PLANT
 	];
-}
+};
 
 /**
  * Returns the department list including the
@@ -94,4 +94,4 @@ DeptEnum.getComboList = function()
 	var cList/*Array*/ = DeptEnum.getList();
 	cList.unshift( DeptEnum.NONE_SELECTED );
 	return cList;
-}
+};
