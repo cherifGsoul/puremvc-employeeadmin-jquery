@@ -10,10 +10,10 @@
  * PureMVC <code>Proxy</code> class object used to control the user list of the
  * application. 
  * 
- * @see org.puremvc.js.patterns.proxy.Proxy Proxy
- * @see org.puremvc.js.demos.objs.employeeadmin.abc.ProxyNames ProxyNames
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * @requires org.puremvc.js.patterns.proxy.Proxy Proxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.abc.ProxyNames ProxyNames
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
  * 
  * @extends org.puremvc.js.patterns.proxy.Proxy Proxy
  * 

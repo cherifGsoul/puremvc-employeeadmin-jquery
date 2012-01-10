@@ -10,7 +10,7 @@
  * The value object in charge of transporting the data to describe each user of
  * the application.
  * 
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
  */
 var UserVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO",
 {

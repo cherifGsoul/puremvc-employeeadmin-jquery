@@ -546,7 +546,7 @@ var RoleVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO",
  * The value object in charge of transporting the data to describe each user of
  * the application.
  * 
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
  */
 var UserVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO",
 {
@@ -631,12 +631,12 @@ var UserVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO",
  * PureMVC <code>Proxy</code> class object used to control the user roles list
  * of the application. 
  * 
- * @see org.puremvc.js.patterns.proxy.Proxy Proxy
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO RoleVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.RoleEnum RoleEnum
- * @see org.puremvc.js.demos.objs.employeeadmin.ApplicationFacade ApplicationFacade
+ * @requires org.puremvc.js.patterns.proxy.Proxy Proxy
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO RoleVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.RoleEnum RoleEnum
+ * @requires org.puremvc.js.demos.objs.employeeadmin.ApplicationFacade ApplicationFacade
  * 
  * @extends org.puremvc.js.patterns.proxy.Proxy Proxy
  * 
@@ -842,10 +842,10 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
  * PureMVC <code>Proxy</code> class object used to control the user list of the
  * application. 
  * 
- * @see org.puremvc.js.patterns.proxy.Proxy Proxy
- * @see org.puremvc.js.demos.objs.employeeadmin.abc.ProxyNames ProxyNames
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * @requires org.puremvc.js.patterns.proxy.Proxy Proxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.abc.ProxyNames ProxyNames
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
  * 
  * @extends org.puremvc.js.patterns.proxy.Proxy Proxy
  * 
@@ -2212,12 +2212,12 @@ UserList.SELECT/*String*/ 	= "select";
  * @class
  * Role panel component <code>Mediator</code>.
  *
- * @see org.puremvc.js.patterns.mediator.Mediator Mediator
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
- * @see org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm UserForm
+ * @requires org.puremvc.js.patterns.mediator.Mediator Mediator
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * @requires org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm UserForm
  *
  * @extends org.puremvc.js.patterns.mediator.Mediator Mediator
  */
@@ -2388,12 +2388,12 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
  * @class
  * User form component <code>Mediator</code>.
  *
- * @see org.puremvc.js.patterns.mediator.Mediator Mediator
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
- * @see org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
- * @see org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm UserForm
+ * @requires org.puremvc.js.patterns.mediator.Mediator Mediator
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * @requires org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm UserForm
  *
  * @extends org.puremvc.js.patterns.mediator.Mediator Mediator
  */
@@ -2566,11 +2566,11 @@ UserFormMediator.MODE_EDIT/*String*/	= "modeEdit";
  * @class
  * User list component <code>Mediator</code>.
  * 
- * @see org.puremvc.js.patterns.mediator.Mediator Mediator
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
- * @see org.puremvc.js.demos.objs.employeeadmin.view.components.UserList UserList
+ * @requires org.puremvc.js.patterns.mediator.Mediator Mediator
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.view.components.UserList UserList
  *
  * @extends org.puremvc.js.patterns.mediator.Mediator Mediator
  */
@@ -2721,11 +2721,11 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
  * @class
  * PureMVC <code>Facade</code> for this application.
  * 
- * @see org.puremvc.js.patterns.facade.Facade Facade
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.controller.StartupCommand StartupCommand
- * @see org.puremvc.js.demos.objs.employeeadmin.controller.DeleteUserCommand DeleteUserCommand
- * @see org.puremvc.js.demos.objs.employeeadmin.controller.AddRoleResultCommand AddRoleResultCommand
+ * @requires org.puremvc.js.patterns.facade.Facade Facade
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.controller.StartupCommand StartupCommand
+ * @requires org.puremvc.js.demos.objs.employeeadmin.controller.DeleteUserCommand DeleteUserCommand
+ * @requires org.puremvc.js.demos.objs.employeeadmin.controller.AddRoleResultCommand AddRoleResultCommand
  * 
  * @extends org.puremvc.js.patterns.facade.Facade Facade
  */

@@ -9,11 +9,11 @@
  * @class
  * User list component <code>Mediator</code>.
  * 
- * @see org.puremvc.js.patterns.mediator.Mediator Mediator
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
- * @see org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
- * @see org.puremvc.js.demos.objs.employeeadmin.view.components.UserList UserList
+ * @requires org.puremvc.js.patterns.mediator.Mediator Mediator
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.view.components.UserList UserList
  *
  * @extends org.puremvc.js.patterns.mediator.Mediator Mediator
  */
