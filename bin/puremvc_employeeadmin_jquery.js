@@ -28,7 +28,7 @@ MediatorNames.ROLE_PANEL_MEDIATOR = "rolePanelMediator";
 var NotificationNames = Objs("org.puremvc.js.demos.objs.employeeadmin.abc.NotificationNames",{});
 
 NotificationNames.STARTUP = "startup";
-NotificationNames.NEW_USER = "newUser"
+NotificationNames.NEW_USER = "newUser";
 NotificationNames.DELETE_USER = "deleteUser";
 NotificationNames.CANCEL_SELECTED = "cancelSelected";
 NotificationNames.USER_SELECTED = "userSelected";
@@ -63,11 +63,11 @@ ProxyNames.USER_PROXY = "userProxy";
  * @class
  * Command used to delete a user from the main users list.
  *
- * @see org.puremvc.js.patterns.command.SimpleCommand SimpleCommand
- * @see org.puremvc.js.patterns.observer.Notification Notification
- * @see org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
- * @see org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy RoleProxy
- * @see org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
+ * @requires org.puremvc.js.patterns.command.SimpleCommand SimpleCommand
+ * @requires org.puremvc.js.patterns.observer.Notification Notification
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.UserProxy UserProxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy RoleProxy
+ * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
  * 
  * @extends org.puremvc.js.patterns.command.SimpleCommand SimpleCommand
  * 
@@ -351,7 +351,7 @@ DeptEnum.getList = function()
 		DeptEnum.SALES, 
 		DeptEnum.PLANT
 	];
-}
+};
 
 /**
  * Returns the department list including the
@@ -366,7 +366,7 @@ DeptEnum.getComboList = function()
 	var cList/*Array*/ = DeptEnum.getList();
 	cList.unshift( DeptEnum.NONE_SELECTED );
 	return cList;
-}
+};
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
@@ -470,7 +470,7 @@ RoleEnum.getList = function()
 		RoleEnum.SHIPPING,
 		RoleEnum.RETURNS
 	];
-}
+};
 
 /**
  * Returns the roles list including the
@@ -485,7 +485,7 @@ RoleEnum.getComboList = function()
 	var cList/*Array*/ = RoleEnum.getList();
 	cList.unshift( RoleEnum.NONE_SELECTED );
 	return cList;
-}
+};
 
 /**
  * Returns the <code>RoleEnum</code> with this ordinal value.
@@ -505,7 +505,7 @@ RoleEnum.getItem = function( ordinal )
 			return RoleEnum[list[i]];
 	
 	return null;
-}
+};
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
@@ -690,7 +690,7 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 		/**
 		 * Remove a role from the list. 
 		 * 
-		 * @param {RoleVO} role
+		 * @param {RoleVO} item
 		 * 		The role to remove.
 		 */ 
 		deleteItem: function( item )
@@ -962,7 +962,7 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	 */
 	initialize: function()
 	{
-		this.listenerMap = new Object();
+		this.listenerMap = {};
 	},
 	
 	/**
@@ -1023,9 +1023,9 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	 */
 	addEventListener: function
 	(
-		type/*String*/,
-		listener/*Function*/,
-		context/*Object*/
+		type,
+		listener,
+		context
 	)
 	{
 		if( typeof type == "undefined" )
@@ -1038,7 +1038,7 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	
 		var queue/*Object*/;
 		if( typeof this.listenerMap[ UiComponent.QUEUE_PATTERN + type ] == "undefined" )
-			queue = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ] = new Array();
+			queue = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ] = [];
 		else
 			queue = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ];
 	
@@ -1068,9 +1068,9 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 	 */
 	removeEventListener: function
 	(
-		type/*String*/,
-		listener/*Function*/,
-		context/*Object*/
+		type,
+		listener,
+		context
 	)
 	{
 		if( typeof type == "undefined" )
@@ -1085,11 +1085,14 @@ var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.
 		var queue/*Object*/ = this.listenerMap[ UiComponent.QUEUE_PATTERN + type ];
 		var len/*Number*/ = queue.length;
 		for(var i/*Number*/=0; i<len; i++)
-			if( UiComponent.ListenerDescriptor.equals( new UiComponent.ListenerDescriptor( listener, context ) ) )
+        {
+            var listenerDescriptor/*UiComponent.ListenerDescriptor*/ = queue[i];
+            if( listenerDescriptor.equals( new UiComponent.ListenerDescriptor( listener, context ) ) )
 			{
 				queue.splice(i,1);
 				return;
 			}
+        }
 	}
 });
 
@@ -1143,7 +1146,36 @@ UiComponent.ListenerDescriptor = Objs("org.puremvc.js.demos.objs.employeeadmin.v
 	{
 		this.listener = listener;
 		this.context = context;
-	}
+	},
+
+    /**
+     * @private
+     *
+     * Compare two <code>UiComponent.ListenerDescriptor</code>s to determine if
+     * they target the exact same event listener.
+     *
+     * @param {UiComponent.ListenerDescriptor} compared
+     * 		The descriptor that will be compared to the current.
+     *
+     * @return {Boolean}
+     * 		The two compared listeners are equals.
+     */
+    equals: function( compared )
+    {
+        if( compared.listener == this.listener )
+        {
+            if( typeof compared.context != "undefined" )
+            {
+                if( compared.context == null && this.context == null )
+                    return true;
+
+                if( compared.context == this.context )
+                    return true;
+            }
+        }
+
+        return false;
+    }
 });
 
 /* 
@@ -1159,35 +1191,6 @@ UiComponent.ListenerDescriptor = Objs("org.puremvc.js.demos.objs.employeeadmin.v
  * @constant
  */
 UiComponent.QUEUE_PATTERN = '@_@';
-
-/**
- * @private
- * 
- * Compare two <code>UiComponent.ListenerDescriptor</code>s to determine if
- * they target the exact same event listener.
- * 
- * @param {UiComponent.ListenerDescriptor} compared
- * 		The descriptor that will be compared to the current.
- * 
- * @return {Boolean}
- * 		The two compared listeners are equals.
- */
-UiComponent.equals = function( compared )
-{
-	if( compared.listener == this.listener )
-	{
-		if( typeof compared.context != "undefined" )
-		{
-			if( compared.context == null && this.context == null )
-				return true;
-				
-			if( compared.context == this.context )
-				return true;
-		}
-	}
-
-	return false;
-}
 /*
  PureMVC Javascript Employee Admin Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org>
  PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved.
@@ -1785,12 +1788,6 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	
 	/**
 	 * Update user attributes with form fields value.
-	 * 
-	 * @param {UserVO} user
-	 * 		The currently selected user.
-	 * 
-	 * @param {Array} userRoles
-	 * 		The roles list for the currently selected user.
 	 */
 	updateUser: function()
 	{
@@ -2474,9 +2471,6 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	 * @private
 	 * 
 	 * Called when a user is updated using the form.
-	 * 
-	 * @param {UiComponent.Event} event
-	 * 		The dispatched event object.
 	 */
 	onUpdate: function()
 	{
@@ -2494,9 +2488,6 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	 * @private
 	 * 
 	 * Called when modifications made to a user in the form are canceled.
-	 * 
-	 * @param {UiComponent.Event} event
-	 * 		The dispatched event object.
 	 */
 	onCancel: function()
 	{
@@ -2690,7 +2681,12 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 		var user/*UserVO*/ = new UserVO();
 		this.sendNotification( NotificationNames.NEW_USER, user );
 	},
-	
+
+    /**
+     * Called when to delete an user from the list.
+     *
+     * @private
+     */
 	onDelete: function()
 	{
 		var uname/*String*/ = this.getUserList().getSelectedUser();
@@ -2704,11 +2700,8 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	 * @private
 	 * 
 	 * Called when a user is selected in the user list.
-	 * 
-	 * @param {String} selectedUserName
-	 * 		User name of the user selected in the list.
 	 */
-	onSelect: function( selectedUserName )
+	onSelect: function()
 	{
 		var uname/*String*/ = this.getUserList().getSelectedUser();
 		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
@@ -2789,4 +2782,4 @@ ApplicationFacade.getInstance = function()
 		Facade.instance = new ApplicationFacade();
 	
 	return Facade.instance;
-}
+};
