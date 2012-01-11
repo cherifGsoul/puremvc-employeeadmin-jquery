@@ -23,7 +23,7 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	{	
 
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 *
 	 * Initialize a <code>UserFormMediator</code> instance.

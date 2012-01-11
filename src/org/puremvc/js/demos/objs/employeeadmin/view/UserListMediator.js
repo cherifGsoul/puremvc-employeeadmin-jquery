@@ -30,7 +30,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	userList: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 *
 	 * Initialize a <code>UserListMediator</code> instance.

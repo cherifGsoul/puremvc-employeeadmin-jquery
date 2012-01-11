@@ -55,7 +55,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	users: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 * Initialize a <code>UserList</code> instance.
 	 */

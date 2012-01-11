@@ -17,7 +17,7 @@
 var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UiComponent",
 {
 	/**
-	 * @construct
+	 * @constructs
 	 * Initialize a <code>UiComponent</code> instance.
 	 */
 	initialize: function()

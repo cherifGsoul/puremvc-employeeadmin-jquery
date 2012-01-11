@@ -12,7 +12,7 @@
 var DeptEnum = Objs("org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum",
 {
 	/**
-	 * @construct
+	 * @constructs
 	 * Initialize a <code>DeptEnum</code> instance.
 	 * 
 	 * @param {String} value

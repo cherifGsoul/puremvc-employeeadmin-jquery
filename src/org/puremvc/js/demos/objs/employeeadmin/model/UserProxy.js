@@ -24,6 +24,7 @@ var UserProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",
 	{
 		
 		/**
+		 * @constructs
 		 * @override
 		 *
 		 * Initialize a <code>UserProxy</code> instance.

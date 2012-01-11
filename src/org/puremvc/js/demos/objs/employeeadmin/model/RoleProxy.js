@@ -26,6 +26,7 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 	{
 	
 		/**
+		 * @constructs
 		 * @override
 		 *
 		 * Initialize a <code>RoleProxy</code> instance.

@@ -118,7 +118,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	roleListComparer: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 *
 	 * Initialize a <code>UserForm</code> instance.

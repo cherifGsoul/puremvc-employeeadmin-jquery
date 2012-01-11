@@ -284,7 +284,7 @@ var StartupCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.St
 var DeptEnum = Objs("org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum",
 {
 	/**
-	 * @construct
+	 * @constructs
 	 * Initialize a <code>DeptEnum</code> instance.
 	 * 
 	 * @param {String} value
@@ -396,7 +396,7 @@ var RoleEnum = Objs("org.puremvc.js.demos.objs.employeeadmin.model.enum.RoleEnum
 	value: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * Initialize a <code>RoleEnum</code> instance.
 	 * 
 	 * @param {String} value
@@ -1660,7 +1660,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	roleListComparer: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 *
 	 * Initialize a <code>UserForm</code> instance.
@@ -2402,7 +2402,7 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	{	
 
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 *
 	 * Initialize a <code>UserFormMediator</code> instance.
@@ -2587,7 +2587,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	userList: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 *
 	 * Initialize a <code>UserListMediator</code> instance.
@@ -2731,43 +2731,42 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
  */
 var ApplicationFacade = Objs("org.puremvc.js.demos.objs.employeeadmin.ApplicationFacade",
 	Facade,
+{
+		
+	/**
+	 * Start the application
+	 * 
+	 * @param {HTMLElement} app
+	 * 		The HTML root node element of the application.
+	 */
+	startup: function( app )
 	{
+		this.sendNotification( NotificationNames.STARTUP, app );
+	},
 		
-		/**
-		 * Start the application
-		 * 
-		 * @param {HTMLElement} app
-		 * 		The HTML root node element of the application.
-		 */
-		startup: function( app )
-		{
-			this.sendNotification( NotificationNames.STARTUP, app );
-		},
+	/**
+	 * The <code>Model</code> <code>View</code> and
+	 * <code>Controller</code> are initialized in a deliberate
+	 * order to ensure internal dependencies are satisfied before
+	 * operations are performed.
+	 * 
+	 * <P>
+	 * <code>initializeController()</code> should be overridden
+	 * for the specific purpose of registering your commands. Any attempt to
+	 * register <code>Mediator</code>s here will result in an error.
+	 * being thrown because the View has not yet been initialized.</p>
+	 * <p>calling <code>this.parent()</code> is also required.
+	 * 
+	 * @override
+	 */
+	initializeController: function()
+	{
+		ApplicationFacade.$super.initializeController.call( this );
 		
-		/**
-		 * The <code>Model</code> <code>View</code> and
-		 * <code>Controller</code> are initialized in a deliberate
-		 * order to ensure internal dependencies are satisfied before
-		 * operations are performed.
-		 * 
-		 * <P>
-		 * <code>initializeController()</code> should be overridden
-		 * for the specific purpose of registering your commands. Any attempt to
-		 * register <code>Mediator</code>s here will result in an error.
-		 * being thrown because the View has not yet been initialized.</p>
-		 * <p>calling <code>this.parent()</code> is also required.
-		 * 
-		 * @override
-		 */
-		initializeController: function()
-		{
-			ApplicationFacade.$super.initializeController.call( this );
-		
-			this.registerCommand( NotificationNames.STARTUP, StartupCommand );
-			this.registerCommand( NotificationNames.DELETE_USER, DeleteUserCommand );
-		}
+		this.registerCommand( NotificationNames.STARTUP, StartupCommand );
+		this.registerCommand( NotificationNames.DELETE_USER, DeleteUserCommand );
 	}
-);
+});
 
 /**
  * Singleton implementation for the <code>ApplicationFacade</code>.

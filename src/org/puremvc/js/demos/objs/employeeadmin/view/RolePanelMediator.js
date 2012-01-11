@@ -30,7 +30,7 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 	roleProxy: null,
 
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 * 
 	 * Initialize a <code>RolePanelMediator</code> instance.

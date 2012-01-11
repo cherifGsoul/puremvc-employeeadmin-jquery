@@ -27,7 +27,7 @@ var RoleEnum = Objs("org.puremvc.js.demos.objs.employeeadmin.model.enum.RoleEnum
 	value: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * Initialize a <code>RoleEnum</code> instance.
 	 * 
 	 * @param {String} value
