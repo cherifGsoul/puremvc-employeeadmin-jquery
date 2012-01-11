@@ -13,6 +13,8 @@
  * listenable from the <code>Mediator</code>s. Here to simplify the demo we
  * don't use a real <code>Event</code> class. Implementers and listeners are
  * responsible for the anonymous events object they dispatch and receive.
+ *
+ * @constructor
  */
 var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UiComponent",
 {

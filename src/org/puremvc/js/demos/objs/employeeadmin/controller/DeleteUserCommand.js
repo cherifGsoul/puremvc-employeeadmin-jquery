@@ -16,7 +16,7 @@
  * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
  * 
  * @extends org.puremvc.js.patterns.command.SimpleCommand SimpleCommand
- * 
+ *
  * @constructor
  */
 var DeleteUserCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.DeleteUserCommand",
@@ -30,10 +30,10 @@ var DeleteUserCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller
 		var user/*UserVO*/ = note.getBody();
 		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
 		var roleProxy/*RoleProxy*/ = this.facade.retrieveProxy( ProxyNames.ROLE_PROXY );
-	
-		userProxy.deleteItem( user );        
+
+		userProxy.deleteItem( user );
 		roleProxy.deleteItem( user );
-		
+
 		this.sendNotification( NotificationNames.USER_DELETED );
 	}
 });

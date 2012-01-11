@@ -17,10 +17,12 @@
  * @requires org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm UserForm
  *
  * @extends org.puremvc.js.patterns.mediator.Mediator Mediator
+ *
+ * @constructor
  */
 var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFormMediator",
 	Mediator,
-	{	
+{	
 
 	/**
 	 * @constructs
