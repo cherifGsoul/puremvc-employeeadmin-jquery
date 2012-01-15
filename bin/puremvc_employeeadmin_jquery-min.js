@@ -116,7 +116,7 @@ var roleEnumList=RoleEnum.getComboList();this.selectedRole=roleEnumList[this.rol
 var alreadyInList=false;for(var i=0;i<this.userRoles.length;i++){var role=this.userRoles[i];
 if(role.equals(this.selectedRole)){alreadyInList=true;break;}}if(this.selectedRole==RoleEnum.NONE_SELECTED||alreadyInList){this.setMode(null);
 }else{this.setMode(RolePanel.ADD_MODE);}}});RolePanel.ADD="add";RolePanel.REMOVE="remove";
-RolePanel.ADD_MODE="addMode";RolePanel.REMOVE_MODE="removeMode";var UserForm=Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm",UiComponent,{userFormPanel:null,uname:null,fname:null,lname:null,email:null,password:null,confirm:null,department:null,submitButton:null,user:null,userRoles:null,mode:null,roleListComparer:null,initialize:function(){UserForm.$super.initialize.call(this);
+RolePanel.ADD_MODE="addMode";RolePanel.REMOVE_MODE="removeMode";var UserForm=Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm",UiComponent,{userFormPanel:null,uname:null,fname:null,lname:null,email:null,password:null,confirm:null,department:null,submitButton:null,user:null,userRoles:null,mode:null,initialize:function(){UserForm.$super.initialize.call(this);
 this.initializeChildren();this.configureListeners();this.clearForm();this.setEnabled(false);
 },initializeChildren:function(){this.userFormPanel=$(".user-form-panel");this.uname=this.userFormPanel.find(".uname");
 this.fname=this.userFormPanel.find(".fname");this.lname=this.userFormPanel.find(".lname");

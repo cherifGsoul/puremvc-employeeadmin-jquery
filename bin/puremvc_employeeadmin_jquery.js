@@ -70,7 +70,7 @@ ProxyNames.USER_PROXY = "userProxy";
  * @requires org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO UserVO
  * 
  * @extends org.puremvc.js.patterns.command.SimpleCommand SimpleCommand
- * 
+ *
  * @constructor
  */
 var DeleteUserCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.DeleteUserCommand",
@@ -84,10 +84,10 @@ var DeleteUserCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller
 		var user/*UserVO*/ = note.getBody();
 		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
 		var roleProxy/*RoleProxy*/ = this.facade.retrieveProxy( ProxyNames.ROLE_PROXY );
-	
-		userProxy.deleteItem( user );        
+
+		userProxy.deleteItem( user );
 		roleProxy.deleteItem( user );
-		
+
 		this.sendNotification( NotificationNames.USER_DELETED );
 	}
 });
@@ -280,6 +280,8 @@ var StartupCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.St
 /**
  * @class
  * An enumeration of department items.
+ *
+ * @constructor
  */
 var DeptEnum = Objs("org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum",
 {
@@ -377,6 +379,8 @@ DeptEnum.getComboList = function()
 /**
  * @classDescription
  * An enumeration of role items.
+ *
+ * @constructor
  */
 var RoleEnum = Objs("org.puremvc.js.demos.objs.employeeadmin.model.enum.RoleEnum",
 {
@@ -647,6 +651,7 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 	{
 	
 		/**
+		 * @constructs
 		 * @override
 		 *
 		 * Initialize a <code>RoleProxy</code> instance.
@@ -856,6 +861,7 @@ var UserProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",
 	{
 		
 		/**
+		 * @constructs
 		 * @override
 		 *
 		 * Initialize a <code>UserProxy</code> instance.
@@ -953,11 +959,13 @@ var UserProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",
  * listenable from the <code>Mediator</code>s. Here to simplify the demo we
  * don't use a real <code>Event</code> class. Implementers and listeners are
  * responsible for the anonymous events object they dispatch and receive.
+ *
+ * @constructor
  */
 var UiComponent = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UiComponent",
 {
 	/**
-	 * @construct
+	 * @constructs
 	 * Initialize a <code>UiComponent</code> instance.
 	 */
 	initialize: function()
@@ -1276,7 +1284,7 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
 	removeRoleButton: null,
 
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 * 
 	 * Initialize a <code>UserList</code> instance.
@@ -1551,6 +1559,8 @@ RolePanel.REMOVE_MODE/*String*/ 	= "removeMode";
  * The UI component in charge of the <em>user form</em>.
  * 
  * @extends org.puremvc.js.demos.objs.employeeadmin.view.components.UiComponent UiComponent
+ *
+ * @constructor
  */
 var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm",
 	UiComponent,
@@ -1649,15 +1659,6 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 * @type {String}
 	 */
 	mode: null,
-	
-	/**
-	 * An array used to compare currently selected items in the role list to those
-	 * lastly inserted to know which one was the last changed by the user. 
-	 * 
-	 * @private
-	 * @type {Array}
-	 */
-	roleListComparer: null,
 	
 	/**
 	 * @constructs
@@ -1995,6 +1996,8 @@ UserForm.MODE_EDIT/*String*/	= "modeEdit";
  * The UI component in charge of the <em>User List</em>.
  * 
  * @extends org.puremvc.js.demos.objs.employeeadmin.view.components.UiComponent UiComponent
+ *
+ * @constructor
  */
 var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.UserList",
 	UiComponent,
@@ -2041,7 +2044,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	users: null,
 	
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 * Initialize a <code>UserList</code> instance.
 	 */
@@ -2233,7 +2236,7 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 	roleProxy: null,
 
 	/**
-	 * @construct
+	 * @constructs
 	 * @override
 	 * 
 	 * Initialize a <code>RolePanelMediator</code> instance.
@@ -2396,10 +2399,12 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
  * @requires org.puremvc.js.demos.objs.employeeadmin.view.components.UserForm UserForm
  *
  * @extends org.puremvc.js.patterns.mediator.Mediator Mediator
+ *
+ * @constructor
  */
 var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFormMediator",
 	Mediator,
-	{	
+{	
 
 	/**
 	 * @constructs
@@ -2732,7 +2737,6 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 var ApplicationFacade = Objs("org.puremvc.js.demos.objs.employeeadmin.ApplicationFacade",
 	Facade,
 {
-		
 	/**
 	 * Start the application
 	 * 

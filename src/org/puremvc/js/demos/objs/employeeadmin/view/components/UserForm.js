@@ -111,15 +111,6 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	mode: null,
 	
 	/**
-	 * An array used to compare currently selected items in the role list to those
-	 * lastly inserted to know which one was the last changed by the user. 
-	 * 
-	 * @private
-	 * @type {Array}
-	 */
-	roleListComparer: null,
-	
-	/**
 	 * @constructs
 	 * @override
 	 *
