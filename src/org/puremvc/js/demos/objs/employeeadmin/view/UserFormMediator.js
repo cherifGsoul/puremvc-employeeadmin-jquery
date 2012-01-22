@@ -1,7 +1,7 @@
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -32,7 +32,6 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	 * @type {UserProxy}
 	 */
 	userProxy: null,
-
 
 	/**
 	 * @constructs

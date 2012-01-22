@@ -48,7 +48,7 @@ return cList;};RoleEnum.getItem=function(ordinal){var list=RoleEnum.getList();fo
 i<list.length;i++){if(RoleEnum[list[i]].ordinal==ordinal){return RoleEnum[list[i]];
 }}return null;};var RoleVO=Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO",{uname:"",roles:[]});
 var UserVO=Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO",{uname:"",fname:"",lname:"",email:"",password:"",department:DeptEnum.NONE_SELECTED,getIsValid:function(){return this.uname!=""&&this.password!=""&&this.department!=DeptEnum.NONE_SELECTED;
-},getGivenName:function(){return this.lname+", "+this.fname;}});var RoleProxy=Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",Proxy,{initialize:function(name,roles){Proxy.prototype.initialize.call(this,name,roles);
+},getGivenName:function(){return this.lname+", "+this.fname;}});var RoleProxy=Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",Proxy,{initialize:function(name,roles){RoleProxy.$super.initialize.call(this,name,roles);
 return this;},getRoles:function(){return this.data;},addItem:function(role){this.getRoles().push(role);
 },deleteItem:function(item){var roles=this.getRoles();for(var i=0;i<roles.length;
 i++){if(roles[i].uname==item.uname){roles.splice(i,1);break;}}},doesUserHaveRole:function(user,role){var roles=this.getRoles();
@@ -62,7 +62,7 @@ if(this.doesUserHaveRole(user,role)){for(var i=0;i<roles.length;i++){if(roles[i]
 for(var j=0;j<userRoles.length;j++){var roleEnum=userRoles[j];if(roleEnum.equals(role)){userRoles.splice(j,1);
 break;}}break;}}}},getUserRoles:function(uname){var roles=this.getRoles();var userRoles=new Array();
 for(var i=0;i<roles.length;i++){if(roles[i].uname==uname){userRoles=roles[i].roles;
-break;}}return userRoles;}});var UserProxy=Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",Proxy,{initialize:function(name,users){Proxy.prototype.initialize.call(this,name,users);
+break;}}return userRoles;}});var UserProxy=Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",Proxy,{initialize:function(name,users){UserProxy.$super.initialize.call(this,name,users);
 },getUsers:function(){return this.data;},addItem:function(user){this.getUsers().push(user);
 },getUser:function(uname){var users=this.getUsers();for(var i=0;i<users.length;i++){if(users[i].uname==uname){return users[i];
 }}return null;},updateItem:function(user){var users=this.getUsers();for(var i=0;i<users.length;

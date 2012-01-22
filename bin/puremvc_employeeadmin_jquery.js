@@ -1,7 +1,7 @@
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -17,7 +17,7 @@ MediatorNames.ROLE_PANEL_MEDIATOR = "rolePanelMediator";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -40,7 +40,7 @@ NotificationNames.ADD_ROLE_RESULT = "addRoleResult";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -55,7 +55,7 @@ ProxyNames.USER_PROXY = "userProxy";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -94,7 +94,7 @@ var DeleteUserCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -191,7 +191,7 @@ var PrepModelCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -236,7 +236,7 @@ var PrepViewCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.P
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -273,7 +273,7 @@ var StartupCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.St
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -372,7 +372,7 @@ DeptEnum.getComboList = function()
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -513,7 +513,7 @@ RoleEnum.getItem = function( ordinal )
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -521,6 +521,8 @@ RoleEnum.getItem = function( ordinal )
  * @classDescription
  * The value object in charge of transporting the data to describe each user
  * roles.
+ * 
+ * @constructor
  */
 var RoleVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO",
 {
@@ -541,7 +543,7 @@ var RoleVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO",
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -551,6 +553,8 @@ var RoleVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.RoleVO",
  * the application.
  * 
  * @requires org.puremvc.js.demos.objs.employeeadmin.model.enum.DeptEnum DeptEnum
+ * 
+ * @constructor
  */
 var UserVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO",
 {
@@ -626,7 +630,7 @@ var UserVO = Objs("org.puremvc.js.demos.objs.employeeadmin.model.vo.UserVO",
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -665,7 +669,7 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 		 */
 		initialize: function( name, roles )
 		{
-			Proxy.prototype.initialize.call( this, name, roles );
+			RoleProxy.$super.initialize.call( this, name, roles );
 		
 			return this;
 		},
@@ -838,7 +842,7 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -859,7 +863,6 @@ var RoleProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.RoleProxy",
 var UserProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",
 	Proxy,
 	{
-		
 		/**
 		 * @constructs
 		 * @override
@@ -874,7 +877,7 @@ var UserProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",
 		 */
 		initialize: function( name, users )
 		{
-			Proxy.prototype.initialize.call( this, name, users );
+			UserProxy.$super.initialize.call( this, name, users );
 		},
 		
 		/**
@@ -945,8 +948,9 @@ var UserProxy = Objs("org.puremvc.js.demos.objs.employeeadmin.model.UserProxy",
 	}
 );
 /*
- PureMVC Javascript Employee Admin Demo by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC Javascript Objs Employee Admin Demo for jQuery
+ by Frederic Saunier <frederic.saunier@puremvc.org> 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -1200,10 +1204,11 @@ UiComponent.ListenerDescriptor = Objs("org.puremvc.js.demos.objs.employeeadmin.v
  */
 UiComponent.QUEUE_PATTERN = '@_@';
 /*
- PureMVC Javascript Employee Admin Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org>
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved.
+ PureMVC Javascript Objs Employee Admin Demo for jQuery
+ by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
-*/
+ */
 
 /**
  * @class
@@ -1563,8 +1568,9 @@ RolePanel.REMOVE/*String*/ 			= "remove";
 RolePanel.ADD_MODE/*String*/ 		= "addMode";
 RolePanel.REMOVE_MODE/*String*/ 	= "removeMode";
 /*
- PureMVC Javascript Employee Admin Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org>
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved.
+ PureMVC Javascript Objs Employee Admin Demo for jQuery
+ by Frederic Saunier <frederic.saunier@puremvc.org> 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -2023,8 +2029,9 @@ UserForm.CANCEL		= "cancel";
 UserForm.MODE_ADD	= "modeAdd";
 UserForm.MODE_EDIT	= "modeEdit";
 /*
- PureMVC Javascript Employee Admin Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC Javascript Objs Employee Admin Demo for jQuery
+ by Frederic Saunier <frederic.saunier@puremvc.org> 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -2259,9 +2266,9 @@ UserList.SELECT 	= "select";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
-*/
+ */
 
 /**
  * @class
@@ -2465,7 +2472,7 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -2496,7 +2503,6 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	 * @type {UserProxy}
 	 */
 	userProxy: null,
-
 
 	/**
 	 * @constructs
@@ -2677,7 +2683,7 @@ UserFormMediator.MODE_EDIT		= "modeEdit";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
@@ -2700,7 +2706,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	/**
 	 * The <code>UserList</code> UI component this <code>Mediator</code>
 	 * manage.
-	 * 
+	 *
 	 * @type {UserList}
 	 */
 	userList: null,
@@ -2864,7 +2870,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
 
