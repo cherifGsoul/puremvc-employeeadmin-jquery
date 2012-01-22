@@ -45,16 +45,35 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	initialize: function( name, viewComponent )
 	{
 		UserListMediator.$super.initialize.call( this, name, viewComponent );
-		
+
+		this.registerListeners();
+
+		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
+		viewComponent.setUsers(userProxy.getUsers());
+	},
+	
+	/**
+	 * Register event listeners for the UserForm component.
+	 */
+	registerListeners: function()
+	{
 		var userList/*UserList*/ = this.getUserList();
 		userList.addEventListener( UserList.NEW, this.onNew, this );
 		userList.addEventListener( UserList.DELETE, this.onDelete, this );
 		userList.addEventListener( UserList.SELECT, this.onSelect, this );
-		
-		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
-		userList.setUsers(userProxy.getUsers());
 	},
 
+	/**
+	 * Unregister event listeners for the UserForm component.
+	 */
+	unregisterListeners: function()
+	{
+		var userList/*UserList*/ = this.getUserList();
+		userList.removeEventListener( UserList.NEW, this.onNew, this );
+		userList.removeEventListener( UserList.DELETE, this.onDelete, this );
+		userList.removeEventListener( UserList.SELECT, this.onSelect, this );
+	},
+	
 	/**
 	 * @private
 	 * 
@@ -151,5 +170,18 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 		var selectedUser/*UserVO*/ = userProxy.getUser( uname );
 
 		this.sendNotification( NotificationNames.USER_SELECTED, selectedUser );
+	},
+
+	/**
+	 * @override
+	 *
+	 * This will never be called during the demo but note that we well made the
+	 * job of removing any listeners from the mediator and the component to
+	 * make those instances ready for garbage collection.
+	 */
+	onRemove: function()
+	{
+		this.unregisterListeners();
+		this.getUserList().unbindListeners();
 	}
 });

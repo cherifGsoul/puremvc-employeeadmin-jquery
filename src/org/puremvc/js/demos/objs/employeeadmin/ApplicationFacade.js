@@ -30,7 +30,7 @@ var ApplicationFacade = Objs("org.puremvc.js.demos.objs.employeeadmin.Applicatio
 	{
 		this.sendNotification( NotificationNames.STARTUP, app );
 	},
-		
+
 	/**
 	 * The <code>Model</code> <code>View</code> and
 	 * <code>Controller</code> are initialized in a deliberate

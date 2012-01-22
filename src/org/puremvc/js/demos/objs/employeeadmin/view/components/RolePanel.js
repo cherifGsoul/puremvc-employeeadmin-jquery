@@ -93,7 +93,7 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
 		RolePanel.$super.initialize.call( this );
 		
 		this.initializeChildren();
-		this.configureListeners();
+		this.bindListeners();
 		
 		this.fillRoleList();
 		this.setEnabled(false);
@@ -104,7 +104,7 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
      */
     initializeChildren: function()
     {
-		this.rolePanel = $(".role-panel");
+		this.rolePanel = jQuery(".role-panel");
 		
 		this.userRoleList = this.rolePanel.find("#user-role-list");
 		this.userRoleList.jqGrid
@@ -126,17 +126,31 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
 		this.removeRoleButton = this.rolePanel.find(".remove-role-button").button();
     },
 
-    /**
-     * Configure event listeners registration.
-     */
-    configureListeners: function()
-    {
-		var that/*RolePanel*/ = this; //Needed to delegate events to this instance.
-		this.addRoleButton.click( function(evt){ that.addRoleButton_clickHandler() } );
-		this.removeRoleButton.click( function(evt){ that.removeRoleButton_clickHandler() } );
-		this.roleList.change( function(evt){ that.roleList_changeHandler() } );
-		this.userRoleList.jqGrid( 'setGridParam', { onSelectRow: function( id ){ that.userRoleList_changeHandler( id ); } } );
-    },
+	/**
+	 * Configure event listeners registration.
+	 */
+	bindListeners: function()
+	{
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserRoleList";
+		this.addRoleButton.on( "click"+namespace, jQuery.proxy( this, "addRoleButton_clickHandler") );
+		this.removeRoleButton.on( "click"+namespace, jQuery.proxy( this, "removeRoleButton_clickHandler") );
+		this.roleList.on( "change"+namespace, jQuery.proxy( this, "roleList_changeHandler") );
+		this.userRoleList.jqGrid( "setGridParam", { onSelectRow: jQuery.proxy( this, "userRoleList_changeHandler") } );
+	},
+
+	/**
+	 * Configure event listeners registration.
+	 */
+	unbindListeners: function()
+	{
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserRoleList";
+		this.addRoleButton.off( "click"+namespace );
+		this.removeRoleButton.off( "click"+namespace );
+		this.roleList.off( "change"+namespace );
+		this.userRoleList.jqGrid( "setGridParam", { onSelectRow: null } );
+	},
 
 	/**
 	 * Add items from <code>RoleEnum</code> to the <code>roleList</code>

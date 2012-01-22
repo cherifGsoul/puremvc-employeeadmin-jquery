@@ -29,7 +29,7 @@ var PrepViewCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.P
 		var rolePanel/*RolePanel*/ = new RolePanel();
 		
 		/*
-		 * Mediator initialization
+		 * Mediators initialization
 		 */
 		var userListMediator/*UserListMediator*/ = new UserListMediator( MediatorNames.USER_LIST_MEDIATOR, userList );
 		var userFormMediator/*UserFormMediator*/ = new UserFormMediator( MediatorNames.USER_FORM_MEDIATOR, userForm );

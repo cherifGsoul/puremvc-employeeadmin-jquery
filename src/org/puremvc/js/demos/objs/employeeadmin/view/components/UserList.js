@@ -64,9 +64,9 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	initialize: function()
 	{
 		UserList.$super.initialize.call( this );
-		
+
 		this.initializeChildren();
-		this.configureListeners();
+		this.bindListeners();
 	},
 
     /**
@@ -74,7 +74,10 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
      */
     initializeChildren: function()
     {
-		this.userListPanel = $(".user-list-panel");
+		/*
+		 * We use JQuery to initialize reference to UI components
+		 */
+		this.userListPanel = jQuery(".user-list-panel");
 
 		this.userList = this.userListPanel.find("#user-list");
 		this.userList.jqGrid
@@ -83,35 +86,47 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 				datatype: "local",
 				width: 630,
 				height: 160,
-			   	colNames:['User Name', 'First Name', 'Last Name', 'Email', 'Department'],
+			   	colNames:["User Name", "First Name", "Last Name", "Email", "Department"],
 			   	colModel:
 				[
-			   		{name:'uname', index:'uname', width:125 },
-			   		{name:'fname', index:'fname', width:125 },
-			   		{name:'lname', index:'lname', width:125 },
-			   		{name:'email', index:'email', width:130 },
-			   		{name:'department', index:'department', width:125}
+			   		{name:"uname", index:"uname", width:125 },
+			   		{name:"fname", index:"fname", width:125 },
+			   		{name:"lname", index:"lname", width:125 },
+			   		{name:"email", index:"email", width:130 },
+			   		{name:"department", index:"department", width:125}
 			   	]
 			}
 		);
 
 		this.newButton = this.userListPanel.find(".new-button").button();
-		this.deleteButton = this.userListPanel.find(".delete-button").button();	
+		this.deleteButton = this.userListPanel.find(".delete-button").button();
 		this.deleteButton.button("disable");
     },
 
-    /**
-     * Configure event listeners registration.
-     */
-    configureListeners: function()
-    {		
-		var that/*UserList*/ = this; //Needed to delegate events to this instance.
-		
-		this.userList.jqGrid( 'setGridParam', { onSelectRow: function( id ){ that.userList_selectHandler( id ); } } );
-		this.newButton.click( function(evt){ that.newButton_clickHandler(evt) } );
-		this.deleteButton.click( function(evt){ that.deleteButton_clickHandler(evt) } );
+	/**
+	 * Bind events to their listeners.
+	 */
+	bindListeners: function()
+    {
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserList";
+		this.userList.jqGrid( "setGridParam", { onSelectRow: jQuery.proxy( this, "userList_selectHandler" ) } );
+		this.newButton.on( "click"+namespace, jQuery.proxy( this, "newButton_clickHandler" ) );
+		this.deleteButton.on( "click"+namespace, jQuery.proxy( this, "deleteButton_clickHandler" ) );
     },
 
+	/**
+	 * Unbind events from their listeners.
+	 */
+	unbindListeners: function()
+	{
+		//jQuery will only remove events attached under this namespace
+		var namespace/*String*/ = ".UserList";
+		this.userList.jqGrid( "setGridParam", { onSelectRow: null } );
+		this.newButton.off( "click"+namespace );
+		this.deleteButton.off( "click"+namespace );
+	},
+	
 	/**
 	 * Add users from a list to the <SELECT> component.
 	 * 
@@ -123,7 +138,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		this.users = userList;
 		
 		// First clear all
-		this.userList.jqGrid( 'clearGridData' );
+		this.userList.jqGrid( "clearGridData" );
 
 		// Fill the data-grid
 		for(var i/*Number*/=0; i<userList.length; i++)
@@ -138,7 +153,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 				department: user.department.value
 			};
 
-			this.userList.jqGrid( 'addRowData', i+1, rowData );
+			this.userList.jqGrid( "addRowData", i+1, rowData );
 		}
 	},
 	
@@ -164,7 +179,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 */
 	userList_selectHandler: function( id )
 	{
-		var rowData/*Object*/ = this.userList.jqGrid( 'getRowData', id );
+		var rowData/*Object*/ = this.userList.jqGrid( "getRowData", id );
 
 		var uname/*String*/;
 		for( var i/*Number*/=0; i<this.users.length; i++ )
@@ -204,7 +219,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 */
 	deSelect: function()
 	{
-		this.userList.jqGrid( 'resetSelection' );
+		this.userList.jqGrid( "resetSelection" );
 		this.selectedUser = null;
 
 		this.deleteButton.button("disable");
@@ -214,6 +229,6 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 /*
  * Events type
  */
-UserList.NEW/*String*/ 		= "new";
-UserList.DELETE/*String*/ 	= "delete";
-UserList.SELECT/*String*/ 	= "select";
+UserList.NEW 		= "new";
+UserList.DELETE 	= "delete";
+UserList.SELECT 	= "select";

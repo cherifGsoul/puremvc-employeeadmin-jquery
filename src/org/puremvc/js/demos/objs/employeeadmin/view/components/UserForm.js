@@ -121,7 +121,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		UserForm.$super.initialize.call( this );
 		
 		this.initializeChildren();
-		this.configureListeners();
+		this.bindListeners();
 
 		//Needed to erase prefilled form informations.
 		this.clearForm();
@@ -136,34 +136,55 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		/*
 		 * We use JQuery to initialize reference to UI components
 		 */
-		this.userFormPanel = $(".user-form-panel");
+		this.userFormPanel = jQuery(".user-form-panel");
 	
-		this.uname = this.userFormPanel.find(".uname");
-		this.fname = this.userFormPanel.find(".fname");
-		this.lname = this.userFormPanel.find(".lname");
-		this.email = this.userFormPanel.find(".email");
-		this.password = this.userFormPanel.find(".password");
-		this.confirm = this.userFormPanel.find(".confirm");
+		this.uname = this.userFormPanel.find("#uname");
+		this.fname = this.userFormPanel.find("#fname");
+		this.lname = this.userFormPanel.find("#lname");
+		this.email = this.userFormPanel.find("#email");
+		this.password = this.userFormPanel.find("#password");
+		this.confirm = this.userFormPanel.find("#confirm");
 		this.department = this.userFormPanel.find(".department");
 	
-		this.submitButton = this.userFormPanel.find(".submit-button").button();
-		this.cancelButton = this.userFormPanel.find(".cancel-button").button();	
+		this.submitButton = this.userFormPanel.find("#submit-button").button();
+		this.cancelButton = this.userFormPanel.find("#cancel-button").button();	
     },
 	
     /**
-     * Configure event listeners registration.
+	 * Bind events to their listeners.
      */
-	configureListeners: function()
+	bindListeners: function()
 	{
-		var that/*UserForm*/ = this; //Needed for closures to use "this" reference.
-		this.uname.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.password.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.confirm.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.department.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.submitButton.click( function(evt){ that.submit_clickHandler(evt) } );
-		this.cancelButton.click( function(evt){ that.cancel_clickHandler(evt) } );
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserForm";
+
+		var focusEventProxy/*jQueryProxy*/ = jQuery.proxy( this, "field_focusHandler" );
+		this.uname.on("focus" + namespace, focusEventProxy );
+		this.password.on("focus" + namespace, focusEventProxy );
+		this.confirm.on("focus" + namespace, focusEventProxy );
+		this.department.on("focus" + namespace, focusEventProxy );
+		this.submitButton.on( "click" + namespace, jQuery.proxy( this, "submitButton_clickHandler" ) );
+		this.cancelButton.on( "click" + namespace, jQuery.proxy( this, "cancelButton_clickHandler" ) );
 	},
-	
+
+	/**
+	 * Unbind events from their listeners.
+	 */
+	unbindListeners: function()
+	{
+		//jQuery will only remove events attached under this namespace
+		var namespace/*String*/ = ".UserForm";
+
+		this.uname.off("focus" + namespace );
+		this.password.off("focus" + namespace );
+		this.confirm.off("focus" + namespace );
+		this.department.off("focus" + namespace );
+		this.roles.off("focus" + namespace );
+
+		this.submitButton.off( "click" + namespace );
+		this.cancelButton.off( "click" + namespace );
+	},
+
 	/**
 	 * Add items from <code>DeptEnum</code> to the corresponding list UI
 	 * component.
@@ -192,7 +213,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 			if( !this.user && deptEnum.equals(DeptEnum.NONE_SELECTED) )
 				selectedAttr = "selected";
 								
-			htmlList += '<option ' + valueAttr + ' ' + selectedAttr + ' >' + deptEnum.value + '</option>';
+			htmlList += "<option " + valueAttr + " " + selectedAttr + " >" + deptEnum.value + "</option>";
 		}
 	
 		this.department.html(htmlList);
@@ -265,10 +286,10 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		this.password.val("");
 		this.confirm.val("");
 		this.fillList([]);
-		this.setFieldError( 'uname', false );
-		this.setFieldError( 'password', false );
-		this.setFieldError( 'confirm', false );
-		this.setFieldError( 'department', false );
+		this.setFieldError( "uname", false );
+		this.setFieldError( "password", false );
+		this.setFieldError( "confirm", false );
+		this.setFieldError( "department", false );
 	},
 
 	/**
@@ -335,14 +356,15 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	/**
 	 * Submit the add or update.
 	 */
-	submit_clickHandler: function()
+	submitButton_clickHandler: function()
 	{
 		this.updateUser();
 		
 		if( this.getErrors() )
 			return;
 	
-		if( this.user.getIsValid() )
+		var user/*UserVO*/ = this.getUser();
+		if( user.getIsValid() )
 		{
 			if( this.mode == UserForm.MODE_ADD )
 				this.dispatchEvent( UserForm.ADD );
@@ -354,7 +376,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	/**
 	 * Cancel the add or update
 	 */
-	cancel_clickHandler: function()
+	cancelButton_clickHandler: function()
 	{
 		this.dispatchEvent( UserForm.CANCEL );
 	},
@@ -364,7 +386,8 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 */
 	field_focusHandler: function( evt )
 	{
-		this.setFieldError( $(evt.target).attr("class"), false );
+		//Remove error on the selected field.
+		this.setFieldError( evt.target.id, false );
 	},
 	
 	/**
@@ -379,32 +402,32 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		var error/*Boolean*/ = false;
 
 		if( this.uname.val() == "" )
-			this.setFieldError( 'uname', error = true );
+			this.setFieldError( "uname", error = true );
 		else
-			this.setFieldError( 'uname', false );
+			this.setFieldError( "uname", false );
 	
 		if( this.password.val() == "" )
-			this.setFieldError( 'password', error = true );
+			this.setFieldError( "password", error = true );
 		else
-			this.setFieldError( 'password', false );
+			this.setFieldError( "password", false );
 	
 		if( this.password.val() != "" && this.confirm.val() != this.password.val() )
-			this.setFieldError( 'confirm', error = true );
+			this.setFieldError( "confirm", error = true );
 		else
-			this.setFieldError( 'confirm', false );
+			this.setFieldError( "confirm", false );
 	
 		var selected/*Number*/ = parseInt(this.department.val())+1;
 		var deptEnumList/*Array*/ = DeptEnum.getComboList();
 		var department/*DeptEnum*/ = deptEnumList[selected];
 	
-		if( DeptEnum.NONE_SELECTED.equals( department ) )
-			this.setFieldError( 'department', error = true );
+		if( department.equals(DeptEnum.NONE_SELECTED) )
+			this.setFieldError( "department", error = true );
 		else
-			this.setFieldError( 'department', false );
+			this.setFieldError( "department", false );
 	
 		return error;
 	},
-	
+		
 	/**
 	 * Set or unset the error state on the uname field.
 	 * 
@@ -417,21 +440,21 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	setFieldError: function( fieldName, error )
 	{
 		var label/*HTMLElement*/ = this.userFormPanel.find( 'label[for="' + fieldName + '"]' );
-		var field/*HTMLElement*/ = this.userFormPanel.find( '.' + fieldName );
-	
+		var field/*HTMLElement*/ = this.userFormPanel.find( "#" + fieldName );
+		
 		if( error )
-			field.addClass( 'fieldError' );
+			field.addClass( "fieldError" );
 		else
-			field.removeClass( 'fieldError' );
+			field.removeClass( "fieldError" );
 	}
 });
 
 /*
  * Event names
  */
-UserForm.ADD/*String*/		= "add";
-UserForm.UPDATE/*String*/	= "update";
-UserForm.CANCEL/*String*/		= "cancel";
+UserForm.ADD		= "add";
+UserForm.UPDATE		= "update";
+UserForm.CANCEL		= "cancel";
 
-UserForm.MODE_ADD/*String*/		= "modeAdd";
-UserForm.MODE_EDIT/*String*/	= "modeEdit";
+UserForm.MODE_ADD	= "modeAdd";
+UserForm.MODE_EDIT	= "modeEdit";

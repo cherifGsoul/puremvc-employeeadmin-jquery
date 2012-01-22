@@ -46,10 +46,7 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 	{
 		RolePanelMediator.$super.initialize.call( this, RolePanelMediator.NAME, viewComponent );
 
-		var rolePanel/*RolePanel*/ = this.getRolePanel();
-		rolePanel.addEventListener( RolePanel.ADD, this.onAddRole, this );
-		rolePanel.addEventListener( RolePanel.REMOVE, this.onRemoveRole, this );
-
+		this.registerListeners();
 		this.roleProxy = this.facade.retrieveProxy( ProxyNames.ROLE_PROXY );
 	},
 
@@ -63,6 +60,26 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 	getRolePanel: function()
 	{
 		return this.viewComponent;
+	},
+
+	/**
+	 * Register event listeners for the UserForm component.
+	 */
+	registerListeners: function()
+	{
+		var rolePanel/*RolePanel*/ = this.getRolePanel();
+		rolePanel.addEventListener( RolePanel.ADD, this.onAddRole, this );
+		rolePanel.addEventListener( RolePanel.REMOVE, this.onRemoveRole, this );
+	},
+
+	/**
+	 * Unregister event listeners for the UserForm component.
+	 */
+	unregisterListeners: function()
+	{
+		var rolePanel/*RolePanel*/ = this.getRolePanel();
+		rolePanel.removeEventListener( RolePanel.ADD, this.onAddRole, this );
+		rolePanel.removeEventListener( RolePanel.REMOVE, this.onRemoveRole, this );
 	},
 
 	/**
@@ -172,5 +189,18 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 				this.updateUserRoleList();
 			break;
 		}
+	},
+
+	/**
+	 * @override
+	 *
+	 * This will never be called during the demo but note that we well made the
+	 * job of removing any listeners from the mediator and the component to
+	 * make those instances ready for garbage collection.
+	 */
+	onRemove: function()
+	{
+		this.unregisterListeners();
+		this.getRolePanel().unbindListeners();
 	}
 });

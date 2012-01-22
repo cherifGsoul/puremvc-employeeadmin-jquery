@@ -25,6 +25,16 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 {	
 
 	/**
+	 * @private
+	 *
+	 * A shortcut to the application <code>UserProxy</code> instance.
+	 * 
+	 * @type {UserProxy}
+	 */
+	userProxy: null,
+
+
+	/**
 	 * @constructs
 	 * @override
 	 *
@@ -41,23 +51,10 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	{
 		UserFormMediator.$super.initialize.call( this, name, viewComponent );
 	
-		var userForm/*UserForm*/ = this.getUserForm();
-		userForm.addEventListener( UserForm.ADD, this.onAdd, this );
-		userForm.addEventListener( UserForm.UPDATE, this.onUpdate, this );
-		userForm.addEventListener( UserForm.CANCEL, this.onCancel, this );
-		
+		this.registerListeners();
 		this.userProxy = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
 	},
-	
-	/**
-	 * @private
-	 *
-	 * A shortcut to the application <code>UserProxy</code> instance.
-	 * 
-	 * @type {UserProxy}
-	 */
-	userProxy: null,
-
+			
 	/**
 	 * @private
 	 * 
@@ -68,6 +65,28 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	getUserForm : function()
 	{
 		return this.viewComponent;
+	},
+
+	/**
+	 * Register event listeners for the UserForm component.
+	 */
+	registerListeners: function()
+	{
+		var userForm/*UserForm*/ = this.getUserForm();
+		userForm.addEventListener( UserForm.ADD, this.onAdd, this );
+		userForm.addEventListener( UserForm.UPDATE, this.onUpdate, this );
+		userForm.addEventListener( UserForm.CANCEL, this.onCancel, this );
+	},
+
+	/**
+	 * Unregister event listeners for the UserForm component.
+	 */
+	unregisterListeners: function()
+	{
+		var userForm/*UserForm*/ = this.getUserForm();
+		userForm.addEventListener( UserForm.ADD, this.onAdd, this );
+		userForm.addEventListener( UserForm.UPDATE, this.onUpdate, this );
+		userForm.addEventListener( UserForm.CANCEL, this.onCancel, this );
 	},
 
 	/**
@@ -166,15 +185,28 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 				userForm.setFocus();
 			break;
 		}
+	},
+
+	/**
+	 * @override
+	 *
+	 * This will never be called during the demo but note that we well made the
+	 * job of removing any listeners from the mediator and the component to
+	 * make those instances ready for garbage collection.
+	 */
+	onRemove: function()
+	{
+		this.unregisterListeners();
+		this.getUserForm().unbindListeners();
 	}
 });
 
 /*
  * Constants
  */
-UserFormMediator.ADD/*String*/			= "add";
-UserFormMediator.UPDATE/*String*/		= "update";
-UserFormMediator.CANCEL/*String*/		= "cancel";
+UserFormMediator.ADD			= "add";
+UserFormMediator.UPDATE			= "update";
+UserFormMediator.CANCEL			= "cancel";
 
-UserFormMediator.MODE_ADD/*String*/		= "modeAdd";
-UserFormMediator.MODE_EDIT/*String*/	= "modeEdit";
+UserFormMediator.MODE_ADD		= "modeAdd";
+UserFormMediator.MODE_EDIT		= "modeEdit";

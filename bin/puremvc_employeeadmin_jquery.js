@@ -219,7 +219,7 @@ var PrepViewCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.P
 		var rolePanel/*RolePanel*/ = new RolePanel();
 		
 		/*
-		 * Mediator initialization
+		 * Mediators initialization
 		 */
 		var userListMediator/*UserListMediator*/ = new UserListMediator( MediatorNames.USER_LIST_MEDIATOR, userList );
 		var userFormMediator/*UserFormMediator*/ = new UserFormMediator( MediatorNames.USER_FORM_MEDIATOR, userForm );
@@ -1294,7 +1294,7 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
 		RolePanel.$super.initialize.call( this );
 		
 		this.initializeChildren();
-		this.configureListeners();
+		this.bindListeners();
 		
 		this.fillRoleList();
 		this.setEnabled(false);
@@ -1305,7 +1305,7 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
      */
     initializeChildren: function()
     {
-		this.rolePanel = $(".role-panel");
+		this.rolePanel = jQuery(".role-panel");
 		
 		this.userRoleList = this.rolePanel.find("#user-role-list");
 		this.userRoleList.jqGrid
@@ -1327,17 +1327,31 @@ var RolePanel = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Ro
 		this.removeRoleButton = this.rolePanel.find(".remove-role-button").button();
     },
 
-    /**
-     * Configure event listeners registration.
-     */
-    configureListeners: function()
-    {
-		var that/*RolePanel*/ = this; //Needed to delegate events to this instance.
-		this.addRoleButton.click( function(evt){ that.addRoleButton_clickHandler() } );
-		this.removeRoleButton.click( function(evt){ that.removeRoleButton_clickHandler() } );
-		this.roleList.change( function(evt){ that.roleList_changeHandler() } );
-		this.userRoleList.jqGrid( 'setGridParam', { onSelectRow: function( id ){ that.userRoleList_changeHandler( id ); } } );
-    },
+	/**
+	 * Configure event listeners registration.
+	 */
+	bindListeners: function()
+	{
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserRoleList";
+		this.addRoleButton.on( "click"+namespace, jQuery.proxy( this, "addRoleButton_clickHandler") );
+		this.removeRoleButton.on( "click"+namespace, jQuery.proxy( this, "removeRoleButton_clickHandler") );
+		this.roleList.on( "change"+namespace, jQuery.proxy( this, "roleList_changeHandler") );
+		this.userRoleList.jqGrid( "setGridParam", { onSelectRow: jQuery.proxy( this, "userRoleList_changeHandler") } );
+	},
+
+	/**
+	 * Configure event listeners registration.
+	 */
+	unbindListeners: function()
+	{
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserRoleList";
+		this.addRoleButton.off( "click"+namespace );
+		this.removeRoleButton.off( "click"+namespace );
+		this.roleList.off( "change"+namespace );
+		this.userRoleList.jqGrid( "setGridParam", { onSelectRow: null } );
+	},
 
 	/**
 	 * Add items from <code>RoleEnum</code> to the <code>roleList</code>
@@ -1671,7 +1685,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		UserForm.$super.initialize.call( this );
 		
 		this.initializeChildren();
-		this.configureListeners();
+		this.bindListeners();
 
 		//Needed to erase prefilled form informations.
 		this.clearForm();
@@ -1686,34 +1700,55 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		/*
 		 * We use JQuery to initialize reference to UI components
 		 */
-		this.userFormPanel = $(".user-form-panel");
+		this.userFormPanel = jQuery(".user-form-panel");
 	
-		this.uname = this.userFormPanel.find(".uname");
-		this.fname = this.userFormPanel.find(".fname");
-		this.lname = this.userFormPanel.find(".lname");
-		this.email = this.userFormPanel.find(".email");
-		this.password = this.userFormPanel.find(".password");
-		this.confirm = this.userFormPanel.find(".confirm");
+		this.uname = this.userFormPanel.find("#uname");
+		this.fname = this.userFormPanel.find("#fname");
+		this.lname = this.userFormPanel.find("#lname");
+		this.email = this.userFormPanel.find("#email");
+		this.password = this.userFormPanel.find("#password");
+		this.confirm = this.userFormPanel.find("#confirm");
 		this.department = this.userFormPanel.find(".department");
 	
-		this.submitButton = this.userFormPanel.find(".submit-button").button();
-		this.cancelButton = this.userFormPanel.find(".cancel-button").button();	
+		this.submitButton = this.userFormPanel.find("#submit-button").button();
+		this.cancelButton = this.userFormPanel.find("#cancel-button").button();	
     },
 	
     /**
-     * Configure event listeners registration.
+	 * Bind events to their listeners.
      */
-	configureListeners: function()
+	bindListeners: function()
 	{
-		var that/*UserForm*/ = this; //Needed for closures to use "this" reference.
-		this.uname.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.password.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.confirm.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.department.focus( function(evt){ that.field_focusHandler(evt) } );
-		this.submitButton.click( function(evt){ that.submit_clickHandler(evt) } );
-		this.cancelButton.click( function(evt){ that.cancel_clickHandler(evt) } );
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserForm";
+
+		var focusEventProxy/*jQueryProxy*/ = jQuery.proxy( this, "field_focusHandler" );
+		this.uname.on("focus" + namespace, focusEventProxy );
+		this.password.on("focus" + namespace, focusEventProxy );
+		this.confirm.on("focus" + namespace, focusEventProxy );
+		this.department.on("focus" + namespace, focusEventProxy );
+		this.submitButton.on( "click" + namespace, jQuery.proxy( this, "submitButton_clickHandler" ) );
+		this.cancelButton.on( "click" + namespace, jQuery.proxy( this, "cancelButton_clickHandler" ) );
 	},
-	
+
+	/**
+	 * Unbind events from their listeners.
+	 */
+	unbindListeners: function()
+	{
+		//jQuery will only remove events attached under this namespace
+		var namespace/*String*/ = ".UserForm";
+
+		this.uname.off("focus" + namespace );
+		this.password.off("focus" + namespace );
+		this.confirm.off("focus" + namespace );
+		this.department.off("focus" + namespace );
+		this.roles.off("focus" + namespace );
+
+		this.submitButton.off( "click" + namespace );
+		this.cancelButton.off( "click" + namespace );
+	},
+
 	/**
 	 * Add items from <code>DeptEnum</code> to the corresponding list UI
 	 * component.
@@ -1742,7 +1777,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 			if( !this.user && deptEnum.equals(DeptEnum.NONE_SELECTED) )
 				selectedAttr = "selected";
 								
-			htmlList += '<option ' + valueAttr + ' ' + selectedAttr + ' >' + deptEnum.value + '</option>';
+			htmlList += "<option " + valueAttr + " " + selectedAttr + " >" + deptEnum.value + "</option>";
 		}
 	
 		this.department.html(htmlList);
@@ -1815,10 +1850,10 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		this.password.val("");
 		this.confirm.val("");
 		this.fillList([]);
-		this.setFieldError( 'uname', false );
-		this.setFieldError( 'password', false );
-		this.setFieldError( 'confirm', false );
-		this.setFieldError( 'department', false );
+		this.setFieldError( "uname", false );
+		this.setFieldError( "password", false );
+		this.setFieldError( "confirm", false );
+		this.setFieldError( "department", false );
 	},
 
 	/**
@@ -1885,14 +1920,15 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	/**
 	 * Submit the add or update.
 	 */
-	submit_clickHandler: function()
+	submitButton_clickHandler: function()
 	{
 		this.updateUser();
 		
 		if( this.getErrors() )
 			return;
 	
-		if( this.user.getIsValid() )
+		var user/*UserVO*/ = this.getUser();
+		if( user.getIsValid() )
 		{
 			if( this.mode == UserForm.MODE_ADD )
 				this.dispatchEvent( UserForm.ADD );
@@ -1904,7 +1940,7 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	/**
 	 * Cancel the add or update
 	 */
-	cancel_clickHandler: function()
+	cancelButton_clickHandler: function()
 	{
 		this.dispatchEvent( UserForm.CANCEL );
 	},
@@ -1914,7 +1950,8 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 */
 	field_focusHandler: function( evt )
 	{
-		this.setFieldError( $(evt.target).attr("class"), false );
+		//Remove error on the selected field.
+		this.setFieldError( evt.target.id, false );
 	},
 	
 	/**
@@ -1929,32 +1966,32 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		var error/*Boolean*/ = false;
 
 		if( this.uname.val() == "" )
-			this.setFieldError( 'uname', error = true );
+			this.setFieldError( "uname", error = true );
 		else
-			this.setFieldError( 'uname', false );
+			this.setFieldError( "uname", false );
 	
 		if( this.password.val() == "" )
-			this.setFieldError( 'password', error = true );
+			this.setFieldError( "password", error = true );
 		else
-			this.setFieldError( 'password', false );
+			this.setFieldError( "password", false );
 	
 		if( this.password.val() != "" && this.confirm.val() != this.password.val() )
-			this.setFieldError( 'confirm', error = true );
+			this.setFieldError( "confirm", error = true );
 		else
-			this.setFieldError( 'confirm', false );
+			this.setFieldError( "confirm", false );
 	
 		var selected/*Number*/ = parseInt(this.department.val())+1;
 		var deptEnumList/*Array*/ = DeptEnum.getComboList();
 		var department/*DeptEnum*/ = deptEnumList[selected];
 	
-		if( DeptEnum.NONE_SELECTED.equals( department ) )
-			this.setFieldError( 'department', error = true );
+		if( department.equals(DeptEnum.NONE_SELECTED) )
+			this.setFieldError( "department", error = true );
 		else
-			this.setFieldError( 'department', false );
+			this.setFieldError( "department", false );
 	
 		return error;
 	},
-	
+		
 	/**
 	 * Set or unset the error state on the uname field.
 	 * 
@@ -1967,24 +2004,24 @@ var UserForm = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	setFieldError: function( fieldName, error )
 	{
 		var label/*HTMLElement*/ = this.userFormPanel.find( 'label[for="' + fieldName + '"]' );
-		var field/*HTMLElement*/ = this.userFormPanel.find( '.' + fieldName );
-	
+		var field/*HTMLElement*/ = this.userFormPanel.find( "#" + fieldName );
+		
 		if( error )
-			field.addClass( 'fieldError' );
+			field.addClass( "fieldError" );
 		else
-			field.removeClass( 'fieldError' );
+			field.removeClass( "fieldError" );
 	}
 });
 
 /*
  * Event names
  */
-UserForm.ADD/*String*/		= "add";
-UserForm.UPDATE/*String*/	= "update";
-UserForm.CANCEL/*String*/		= "cancel";
+UserForm.ADD		= "add";
+UserForm.UPDATE		= "update";
+UserForm.CANCEL		= "cancel";
 
-UserForm.MODE_ADD/*String*/		= "modeAdd";
-UserForm.MODE_EDIT/*String*/	= "modeEdit";
+UserForm.MODE_ADD	= "modeAdd";
+UserForm.MODE_EDIT	= "modeEdit";
 /*
  PureMVC Javascript Employee Admin Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org> 
  PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved. 
@@ -2051,9 +2088,9 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	initialize: function()
 	{
 		UserList.$super.initialize.call( this );
-		
+
 		this.initializeChildren();
-		this.configureListeners();
+		this.bindListeners();
 	},
 
     /**
@@ -2061,7 +2098,10 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
      */
     initializeChildren: function()
     {
-		this.userListPanel = $(".user-list-panel");
+		/*
+		 * We use JQuery to initialize reference to UI components
+		 */
+		this.userListPanel = jQuery(".user-list-panel");
 
 		this.userList = this.userListPanel.find("#user-list");
 		this.userList.jqGrid
@@ -2070,35 +2110,47 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 				datatype: "local",
 				width: 630,
 				height: 160,
-			   	colNames:['User Name', 'First Name', 'Last Name', 'Email', 'Department'],
+			   	colNames:["User Name", "First Name", "Last Name", "Email", "Department"],
 			   	colModel:
 				[
-			   		{name:'uname', index:'uname', width:125 },
-			   		{name:'fname', index:'fname', width:125 },
-			   		{name:'lname', index:'lname', width:125 },
-			   		{name:'email', index:'email', width:130 },
-			   		{name:'department', index:'department', width:125}
+			   		{name:"uname", index:"uname", width:125 },
+			   		{name:"fname", index:"fname", width:125 },
+			   		{name:"lname", index:"lname", width:125 },
+			   		{name:"email", index:"email", width:130 },
+			   		{name:"department", index:"department", width:125}
 			   	]
 			}
 		);
 
 		this.newButton = this.userListPanel.find(".new-button").button();
-		this.deleteButton = this.userListPanel.find(".delete-button").button();	
+		this.deleteButton = this.userListPanel.find(".delete-button").button();
 		this.deleteButton.button("disable");
     },
 
-    /**
-     * Configure event listeners registration.
-     */
-    configureListeners: function()
-    {		
-		var that/*UserList*/ = this; //Needed to delegate events to this instance.
-		
-		this.userList.jqGrid( 'setGridParam', { onSelectRow: function( id ){ that.userList_selectHandler( id ); } } );
-		this.newButton.click( function(evt){ that.newButton_clickHandler(evt) } );
-		this.deleteButton.click( function(evt){ that.deleteButton_clickHandler(evt) } );
+	/**
+	 * Bind events to their listeners.
+	 */
+	bindListeners: function()
+    {
+		//jQuery will be able to only remove events attached under this namespace
+		var namespace/*String*/ = ".UserList";
+		this.userList.jqGrid( "setGridParam", { onSelectRow: jQuery.proxy( this, "userList_selectHandler" ) } );
+		this.newButton.on( "click"+namespace, jQuery.proxy( this, "newButton_clickHandler" ) );
+		this.deleteButton.on( "click"+namespace, jQuery.proxy( this, "deleteButton_clickHandler" ) );
     },
 
+	/**
+	 * Unbind events from their listeners.
+	 */
+	unbindListeners: function()
+	{
+		//jQuery will only remove events attached under this namespace
+		var namespace/*String*/ = ".UserList";
+		this.userList.jqGrid( "setGridParam", { onSelectRow: null } );
+		this.newButton.off( "click"+namespace );
+		this.deleteButton.off( "click"+namespace );
+	},
+	
 	/**
 	 * Add users from a list to the <SELECT> component.
 	 * 
@@ -2110,7 +2162,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 		this.users = userList;
 		
 		// First clear all
-		this.userList.jqGrid( 'clearGridData' );
+		this.userList.jqGrid( "clearGridData" );
 
 		// Fill the data-grid
 		for(var i/*Number*/=0; i<userList.length; i++)
@@ -2125,7 +2177,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 				department: user.department.value
 			};
 
-			this.userList.jqGrid( 'addRowData', i+1, rowData );
+			this.userList.jqGrid( "addRowData", i+1, rowData );
 		}
 	},
 	
@@ -2151,7 +2203,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 */
 	userList_selectHandler: function( id )
 	{
-		var rowData/*Object*/ = this.userList.jqGrid( 'getRowData', id );
+		var rowData/*Object*/ = this.userList.jqGrid( "getRowData", id );
 
 		var uname/*String*/;
 		for( var i/*Number*/=0; i<this.users.length; i++ )
@@ -2191,7 +2243,7 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 	 */
 	deSelect: function()
 	{
-		this.userList.jqGrid( 'resetSelection' );
+		this.userList.jqGrid( "resetSelection" );
 		this.selectedUser = null;
 
 		this.deleteButton.button("disable");
@@ -2201,9 +2253,9 @@ var UserList = Objs("org.puremvc.js.demos.objs.employeeadmin.view.components.Use
 /*
  * Events type
  */
-UserList.NEW/*String*/ 		= "new";
-UserList.DELETE/*String*/ 	= "delete";
-UserList.SELECT/*String*/ 	= "select";
+UserList.NEW 		= "new";
+UserList.DELETE 	= "delete";
+UserList.SELECT 	= "select";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
@@ -2252,10 +2304,7 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 	{
 		RolePanelMediator.$super.initialize.call( this, RolePanelMediator.NAME, viewComponent );
 
-		var rolePanel/*RolePanel*/ = this.getRolePanel();
-		rolePanel.addEventListener( RolePanel.ADD, this.onAddRole, this );
-		rolePanel.addEventListener( RolePanel.REMOVE, this.onRemoveRole, this );
-
+		this.registerListeners();
 		this.roleProxy = this.facade.retrieveProxy( ProxyNames.ROLE_PROXY );
 	},
 
@@ -2269,6 +2318,26 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 	getRolePanel: function()
 	{
 		return this.viewComponent;
+	},
+
+	/**
+	 * Register event listeners for the UserForm component.
+	 */
+	registerListeners: function()
+	{
+		var rolePanel/*RolePanel*/ = this.getRolePanel();
+		rolePanel.addEventListener( RolePanel.ADD, this.onAddRole, this );
+		rolePanel.addEventListener( RolePanel.REMOVE, this.onRemoveRole, this );
+	},
+
+	/**
+	 * Unregister event listeners for the UserForm component.
+	 */
+	unregisterListeners: function()
+	{
+		var rolePanel/*RolePanel*/ = this.getRolePanel();
+		rolePanel.removeEventListener( RolePanel.ADD, this.onAddRole, this );
+		rolePanel.removeEventListener( RolePanel.REMOVE, this.onRemoveRole, this );
 	},
 
 	/**
@@ -2378,6 +2447,19 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 				this.updateUserRoleList();
 			break;
 		}
+	},
+
+	/**
+	 * @override
+	 *
+	 * This will never be called during the demo but note that we well made the
+	 * job of removing any listeners from the mediator and the component to
+	 * make those instances ready for garbage collection.
+	 */
+	onRemove: function()
+	{
+		this.unregisterListeners();
+		this.getRolePanel().unbindListeners();
 	}
 });
 /*
@@ -2407,6 +2489,16 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 {	
 
 	/**
+	 * @private
+	 *
+	 * A shortcut to the application <code>UserProxy</code> instance.
+	 * 
+	 * @type {UserProxy}
+	 */
+	userProxy: null,
+
+
+	/**
 	 * @constructs
 	 * @override
 	 *
@@ -2423,23 +2515,10 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	{
 		UserFormMediator.$super.initialize.call( this, name, viewComponent );
 	
-		var userForm/*UserForm*/ = this.getUserForm();
-		userForm.addEventListener( UserForm.ADD, this.onAdd, this );
-		userForm.addEventListener( UserForm.UPDATE, this.onUpdate, this );
-		userForm.addEventListener( UserForm.CANCEL, this.onCancel, this );
-		
+		this.registerListeners();
 		this.userProxy = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
 	},
-	
-	/**
-	 * @private
-	 *
-	 * A shortcut to the application <code>UserProxy</code> instance.
-	 * 
-	 * @type {UserProxy}
-	 */
-	userProxy: null,
-
+			
 	/**
 	 * @private
 	 * 
@@ -2450,6 +2529,28 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 	getUserForm : function()
 	{
 		return this.viewComponent;
+	},
+
+	/**
+	 * Register event listeners for the UserForm component.
+	 */
+	registerListeners: function()
+	{
+		var userForm/*UserForm*/ = this.getUserForm();
+		userForm.addEventListener( UserForm.ADD, this.onAdd, this );
+		userForm.addEventListener( UserForm.UPDATE, this.onUpdate, this );
+		userForm.addEventListener( UserForm.CANCEL, this.onCancel, this );
+	},
+
+	/**
+	 * Unregister event listeners for the UserForm component.
+	 */
+	unregisterListeners: function()
+	{
+		var userForm/*UserForm*/ = this.getUserForm();
+		userForm.addEventListener( UserForm.ADD, this.onAdd, this );
+		userForm.addEventListener( UserForm.UPDATE, this.onUpdate, this );
+		userForm.addEventListener( UserForm.CANCEL, this.onCancel, this );
 	},
 
 	/**
@@ -2548,18 +2649,31 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 				userForm.setFocus();
 			break;
 		}
+	},
+
+	/**
+	 * @override
+	 *
+	 * This will never be called during the demo but note that we well made the
+	 * job of removing any listeners from the mediator and the component to
+	 * make those instances ready for garbage collection.
+	 */
+	onRemove: function()
+	{
+		this.unregisterListeners();
+		this.getUserForm().unbindListeners();
 	}
 });
 
 /*
  * Constants
  */
-UserFormMediator.ADD/*String*/			= "add";
-UserFormMediator.UPDATE/*String*/		= "update";
-UserFormMediator.CANCEL/*String*/		= "cancel";
+UserFormMediator.ADD			= "add";
+UserFormMediator.UPDATE			= "update";
+UserFormMediator.CANCEL			= "cancel";
 
-UserFormMediator.MODE_ADD/*String*/		= "modeAdd";
-UserFormMediator.MODE_EDIT/*String*/	= "modeEdit";
+UserFormMediator.MODE_ADD		= "modeAdd";
+UserFormMediator.MODE_EDIT		= "modeEdit";
 /*
  PureMVC Javascript Objs Employee Admin Demo for jQuery
  by Frederic Saunier <frederic.saunier@puremvc.org> 
@@ -2607,16 +2721,35 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	initialize: function( name, viewComponent )
 	{
 		UserListMediator.$super.initialize.call( this, name, viewComponent );
-		
+
+		this.registerListeners();
+
+		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
+		viewComponent.setUsers(userProxy.getUsers());
+	},
+	
+	/**
+	 * Register event listeners for the UserForm component.
+	 */
+	registerListeners: function()
+	{
 		var userList/*UserList*/ = this.getUserList();
 		userList.addEventListener( UserList.NEW, this.onNew, this );
 		userList.addEventListener( UserList.DELETE, this.onDelete, this );
 		userList.addEventListener( UserList.SELECT, this.onSelect, this );
-		
-		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
-		userList.setUsers(userProxy.getUsers());
 	},
 
+	/**
+	 * Unregister event listeners for the UserForm component.
+	 */
+	unregisterListeners: function()
+	{
+		var userList/*UserList*/ = this.getUserList();
+		userList.removeEventListener( UserList.NEW, this.onNew, this );
+		userList.removeEventListener( UserList.DELETE, this.onDelete, this );
+		userList.removeEventListener( UserList.SELECT, this.onSelect, this );
+	},
+	
 	/**
 	 * @private
 	 * 
@@ -2713,6 +2846,19 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 		var selectedUser/*UserVO*/ = userProxy.getUser( uname );
 
 		this.sendNotification( NotificationNames.USER_SELECTED, selectedUser );
+	},
+
+	/**
+	 * @override
+	 *
+	 * This will never be called during the demo but note that we well made the
+	 * job of removing any listeners from the mediator and the component to
+	 * make those instances ready for garbage collection.
+	 */
+	onRemove: function()
+	{
+		this.unregisterListeners();
+		this.getUserList().unbindListeners();
 	}
 });
 /*
@@ -2747,7 +2893,7 @@ var ApplicationFacade = Objs("org.puremvc.js.demos.objs.employeeadmin.Applicatio
 	{
 		this.sendNotification( NotificationNames.STARTUP, app );
 	},
-		
+
 	/**
 	 * The <code>Model</code> <code>View</code> and
 	 * <code>Controller</code> are initialized in a deliberate
