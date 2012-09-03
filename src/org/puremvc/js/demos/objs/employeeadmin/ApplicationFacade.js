@@ -54,18 +54,3 @@ var ApplicationFacade = Objs("org.puremvc.js.demos.objs.employeeadmin.Applicatio
 		this.registerCommand( NotificationNames.DELETE_USER, DeleteUserCommand );
 	}
 });
-
-/**
- * Singleton implementation for the <code>ApplicationFacade</code>.
- *
- * @return {ApplicationFacade}
- * 		The <code>Facade</code> subclass instance used throughout the
- * 		application.
- */
-ApplicationFacade.getInstance = function()
-{
-	if( !Facade.instance ) 
-		Facade.instance = new ApplicationFacade();
-	
-	return Facade.instance;
-};

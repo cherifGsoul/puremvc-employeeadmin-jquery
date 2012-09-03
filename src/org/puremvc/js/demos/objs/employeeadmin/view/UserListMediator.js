@@ -47,9 +47,15 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 		UserListMediator.$super.initialize.call( this, name, viewComponent );
 
 		this.registerListeners();
+	},
 
-		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
-		viewComponent.setUsers(userProxy.getUsers());
+	/**
+	 * @override
+	 */
+	onRegister: function()
+	{
+		var userProxy/*UserProxy*/ = this.model.retrieveProxy( ProxyNames.USER_PROXY );
+		this.viewComponent.setUsers(userProxy.getUsers());
 	},
 	
 	/**
@@ -108,7 +114,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	handleNotification: function( note )
 	{
 		var userList/*UserList*/ = this.getUserList();
-		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
+		var userProxy/*UserProxy*/ = this.model.retrieveProxy( ProxyNames.USER_PROXY );
 
 		switch( note.getName() )
 		{
@@ -152,7 +158,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	onDelete: function()
 	{
 		var uname/*String*/ = this.getUserList().getSelectedUser();
-		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
+		var userProxy/*UserProxy*/ = this.model.retrieveProxy( ProxyNames.USER_PROXY );
 		var selectedUser/*UserVO*/ = userProxy.getUser( uname );
 
 		this.sendNotification( NotificationNames.DELETE_USER, selectedUser );
@@ -166,7 +172,7 @@ var UserListMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserLi
 	onSelect: function()
 	{
 		var uname/*String*/ = this.getUserList().getSelectedUser();
-		var userProxy/*UserProxy*/ = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
+		var userProxy/*UserProxy*/ = this.model.retrieveProxy( ProxyNames.USER_PROXY );
 		var selectedUser/*UserVO*/ = userProxy.getUser( uname );
 
 		this.sendNotification( NotificationNames.USER_SELECTED, selectedUser );

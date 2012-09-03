@@ -21,8 +21,8 @@ var PrepModelCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.
 	 */
 	execute: function( note )
 	{
-		this.facade.registerProxy( new UserProxy( ProxyNames.USER_PROXY, this.generateUsers() ) );
-		this.facade.registerProxy( new RoleProxy( ProxyNames.ROLE_PROXY , this.generateRoles() ) );
+		this.model.registerProxy( new UserProxy( ProxyNames.USER_PROXY, this.generateUsers() ) );
+		this.model.registerProxy( new RoleProxy( ProxyNames.ROLE_PROXY , this.generateRoles() ) );
 	},
 	
 	/**

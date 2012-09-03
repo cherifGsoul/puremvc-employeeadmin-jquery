@@ -47,7 +47,14 @@ var RolePanelMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.compo
 		RolePanelMediator.$super.initialize.call( this, RolePanelMediator.NAME, viewComponent );
 
 		this.registerListeners();
-		this.roleProxy = this.facade.retrieveProxy( ProxyNames.ROLE_PROXY );
+	},
+
+	/**
+	 * @override
+	 */
+	onRegister: function()
+	{
+		this.roleProxy = this.model.retrieveProxy( ProxyNames.ROLE_PROXY );
 	},
 
 	/**

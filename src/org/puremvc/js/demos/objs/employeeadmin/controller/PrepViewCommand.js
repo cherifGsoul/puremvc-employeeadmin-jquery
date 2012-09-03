@@ -38,8 +38,8 @@ var PrepViewCommand = Objs("org.puremvc.js.demos.objs.employeeadmin.controller.P
 		/*
 		 * PureMVC mediators registration
 		 */
-		this.facade.registerMediator( userFormMediator );
-		this.facade.registerMediator( userListMediator );
-		this.facade.registerMediator( rolePanelMediator );
+		this.view.registerMediator( userFormMediator );
+		this.view.registerMediator( userListMediator );
+		this.view.registerMediator( rolePanelMediator );
 	}
 });

@@ -51,9 +51,16 @@ var UserFormMediator = Objs("org.puremvc.js.demos.objs.employeeadmin.view.UserFo
 		UserFormMediator.$super.initialize.call( this, name, viewComponent );
 	
 		this.registerListeners();
-		this.userProxy = this.facade.retrieveProxy( ProxyNames.USER_PROXY );
 	},
-			
+
+	/**
+	 * @override
+	 */
+	onRegister: function()
+	{
+		this.userProxy = this.model.retrieveProxy( ProxyNames.USER_PROXY );
+	},
+
 	/**
 	 * @private
 	 * 
